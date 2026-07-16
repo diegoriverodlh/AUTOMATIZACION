@@ -45,13 +45,13 @@ def generate_sqlx_from_json(event, context):
     {json.dumps(json_data, indent=2)}
     """
 
-    # 4. Llamar a Vertex AI (Gemini 1.5 Flash) utilizando el SDK oficial de Google GenAI
+    # 4. Llamar a Vertex AI (Gemini 3.5 Flash) utilizando el SDK oficial de Google GenAI
     # Nota: Asegúrate de tener configurada la variable de entorno de GCP o el Service Account con permisos.
     ai_client = genai.Client()
     
     try:
         response = ai_client.models.generate_content(
-            model='gemini-1.5-flash',
+            model='gemini-3.5-flash',
             contents=user_prompt,
             config=types.GenerateContentConfig(
                 system_instruction=system_instruction,
@@ -67,7 +67,7 @@ def generate_sqlx_from_json(event, context):
         output_bucket = storage_client.bucket(output_bucket_name)
         
         output_file_name = file_name.replace('.json', '.sqlx')
-        output_blob = output_bucket.blob(f"output_sqlx/{output_file_name}")
+        output_blob = output_bucket.blob(f"output_sqlx/main/{output_file_name}")
         
         output_blob.upload_from_string(sqlx_code, content_type='text/plain')
         print(f"Archivo SQLX guardado en: gs://{output_bucket_name}/output_sqlx/{output_file_name}")

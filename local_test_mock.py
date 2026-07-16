@@ -45,7 +45,7 @@ def ejecutar_prueba_local():
     ai_client = genai.Client(api_key=api_key)
     
     try:
-        print("Llamando a la API de Gemini (gemini-1.5-flash)...")
+        print("Llamando a la API de Gemini (gemini-3.5-flash)...")
         response = ai_client.models.generate_content(
             model='gemini-3.5-flash',
             contents=user_prompt,
@@ -62,7 +62,7 @@ def ejecutar_prueba_local():
         print("--------------------------------------------------")
         
         # Guardar localmente
-        output_file = "stg_customers.sqlx"
+        output_file = "stg_customers_test.sqlx"
         with open(output_file, "w", encoding="utf-8") as out:
             out.write(sqlx_code)
         print(f"\nArchivo guardado localmente como: {output_file}")
